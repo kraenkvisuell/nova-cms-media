@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateFr extends FormRequest
+class UploadRequest extends FormRequest
 {
 	protected function failedValidation(Validator $validator) {
 		throw new HttpResponseException(response()->json([
@@ -17,18 +17,14 @@ class UpdateFr extends FormRequest
 	public function rules()
 	{
 		return [
-			'id' => 'required|numeric',
-			'title' => 'required|string|max:250',
-			'private' => 'boolean'
+			'file' => 'required|file'
 		];
 	}
 
 	public function messages()
 	{
 		return [
-			'id.*' => __('Invalid id'),
-			'title.*' => __('Invalid title'),
-			'private.*' => __('Field private must be boolean')
+			'file.*' => __('Invalid file')
 		];
 	}
 

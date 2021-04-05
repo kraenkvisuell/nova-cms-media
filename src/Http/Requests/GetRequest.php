@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GetFr extends FormRequest
+class GetRequest extends FormRequest
 {
 	protected function failedValidation(Validator $validator) {
 		throw new HttpResponseException(response()->json([

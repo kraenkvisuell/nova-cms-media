@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class FolderDelFr extends FormRequest
+class UpdateRequest extends FormRequest
 {
 	protected function failedValidation(Validator $validator) {
 		throw new HttpResponseException(response()->json([
@@ -17,14 +17,18 @@ class FolderDelFr extends FormRequest
 	public function rules()
 	{
 		return [
-			'folder' => 'required|string|regex:/^[a-zA-Z0-9_\-\/]+$/'
+			'id' => 'required|numeric',
+			'title' => 'required|string|max:250',
+			'private' => 'boolean'
 		];
 	}
 
 	public function messages()
 	{
 		return [
-			'folder.*' => __('Invalid path')
+			'id.*' => __('Invalid id'),
+			'title.*' => __('Invalid title'),
+			'private.*' => __('Field private must be boolean')
 		];
 	}
 

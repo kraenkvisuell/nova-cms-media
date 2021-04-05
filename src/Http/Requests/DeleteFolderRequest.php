@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class DeleteFr extends FormRequest
+class DeleteFolderRequest extends FormRequest
 {
 	protected function failedValidation(Validator $validator) {
 		throw new HttpResponseException(response()->json([
@@ -17,14 +17,14 @@ class DeleteFr extends FormRequest
 	public function rules()
 	{
 		return [
-			'ids' => 'required|array'
+			'folder' => 'required|string|regex:/^[a-zA-Z0-9_\-\/]+$/'
 		];
 	}
 
 	public function messages()
 	{
 		return [
-			'ids.*' => __('Invalid field of items ids')
+			'folder.*' => __('Invalid path')
 		];
 	}
 

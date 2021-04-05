@@ -4,13 +4,13 @@ namespace Kraenkvisuell\NovaCmsMedia\Http\Controllers;
 
 use Kraenkvisuell\NovaCmsMedia\API;
 use Kraenkvisuell\NovaCmsMedia\Http\Requests\{
-	CropFr,
-	DeleteFr,
-	GetFr,
-	UploadFr,
-	UpdateFr,
-	FolderNewFr,
-	FolderDelFr,
+	CropRequest,
+	DeleteRequest,
+	GetRequest,
+	UploadRequest,
+	UpdateRequest,
+	NewFolderRequest,
+	DeleteFolderRequest,
 };
 use Kraenkvisuell\NovaCmsMedia\Core\{
 	Crop,
@@ -21,7 +21,7 @@ use Kraenkvisuell\NovaCmsMedia\Core\{
 
 class Tool {
 
-	function get(GetFr $fr)
+	function get(GetRequest $fr)
 	{
 		$preview = config('nova-cms-media.resize.preview');
 
@@ -52,7 +52,7 @@ class Tool {
 		return API::getPrivateFile($item->path, $size);
 	}
 
-	function upload(UploadFr $fr)
+	function upload(UploadRequest $fr)
 	{
 		$file = request()->file('file');
 		$file_name = " ({$file->getClientOriginalName()})";
@@ -85,7 +85,7 @@ class Tool {
 		abort(422, __('The file was not downloaded for unknown reasons') . $file_name);
 	}
 
-	function delete(DeleteFr $fr)
+	function delete(DeleteRequest $fr)
 	{
 		$get = Model::find(request('ids'));
 		$delete = Model::whereIn('id', request('ids'))->delete();
@@ -110,7 +110,7 @@ class Tool {
 		return [ 'status' => !!$delete ];
 	}
 
-	function update(UpdateFr $fr)
+	function update(UpdateRequest $fr)
 	{
 		$item = Model::find(request('id'));
 		if ( !$item ) abort(422, __('Invalid id'));
@@ -153,7 +153,7 @@ class Tool {
 		return $item;
 	}
 
-	function crop(CropFr $fr)
+	function crop(CropRequest $fr)
 	{
 		$crop = new Crop(request()->toArray());
 		if ( !$crop->form )
@@ -169,7 +169,7 @@ class Tool {
 		abort(422, __('The file was not downloaded for unknown reasons'));
 	}
 
-	function folderNew(FolderNewFr $fr)
+	function folderNew(NewFolderRequest $fr)
 	{
 		if ( Helper::storage()->makeDirectory(Helper::folder(request('base') . request('folder') .'/')) ) {
 			return [ 'folders' => Helper::directories() ];
@@ -178,7 +178,7 @@ class Tool {
 		abort(422, __('Cannot manage folders'));
 	}
 
-	function folderDel(FolderDelFr $fr)
+	function folderDel(DeleteFolderRequest $fr)
 	{
 		if ( Helper::storage()->deleteDirectory(Helper::folder(request('folder'))) ) {
 			return [ 'folders' => Helper::directories() ];

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class FolderNewFr extends FormRequest
+class DeleteRequest extends FormRequest
 {
 	protected function failedValidation(Validator $validator) {
 		throw new HttpResponseException(response()->json([
@@ -17,16 +17,14 @@ class FolderNewFr extends FormRequest
 	public function rules()
 	{
 		return [
-			'base' => 'required|string|regex:/^[a-zA-Z0-9_\-\/]+$/',
-			'folder' => 'required|string|regex:/^[a-zA-Z0-9_\-]+$/'
+			'ids' => 'required|array'
 		];
 	}
 
 	public function messages()
 	{
 		return [
-			'base.*' => __('Invalid base path. Use only: a-z 0-9 - _'),
-			'folder.*' => __('Invalid new folder name. Use only: a-z 0-9 - _')
+			'ids.*' => __('Invalid field of items ids')
 		];
 	}
 
