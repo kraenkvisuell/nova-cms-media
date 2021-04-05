@@ -1,8 +1,8 @@
 <?php
 
-namespace Kraenkvisuell\NovaMediaLibrary\Core;
+namespace Kraenkvisuell\NovaCmsMedia\Core;
 
-use Kraenkvisuell\NovaMediaLibrary\API;
+use Kraenkvisuell\NovaCmsMedia\API;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 
@@ -16,7 +16,7 @@ class Crop {
 	private $bytes = 0;
 
 	public function __construct($form) {
-		$this->config = config('nova-media-library.resize');
+		$this->config = config('nova-cms-media.resize');
 		if ( !$this->config['front_crop'] or !class_exists('\Intervention\Image\ImageManager')) return;
 
 		$this->form = $form;
@@ -79,7 +79,7 @@ class Crop {
 
 	static function createSizes($item)
 	{
-		$config = config('nova-media-library.resize');
+		$config = config('nova-cms-media.resize');
 		if (
 			'image' != data_get($item, 'options.mime')
 		     or !is_array($config)

@@ -1,12 +1,12 @@
 <?php
 
-namespace Kraenkvisuell\NovaMediaLibrary;
+namespace Kraenkvisuell\NovaCmsMedia;
 
-use Kraenkvisuell\NovaMediaLibrary\Core\Helper;
+use Kraenkvisuell\NovaCmsMedia\Core\Helper;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
-class NovaMediaLibrary extends Tool
+class NovaCmsMedia extends Tool
 {
     /**
      * Perform any tasks that need to happen when the tool is booted.
@@ -15,8 +15,8 @@ class NovaMediaLibrary extends Tool
      */
     public function boot()
     {
-	    Nova::script('nova-media-library', __DIR__.'/../dist/js/tool.js');
-	    Nova::style('nova-media-library', __DIR__.'/../dist/css/tool.css');
+	    Nova::script('nova-cms-media', __DIR__.'/../dist/js/tool.js');
+	    Nova::style('nova-cms-media', __DIR__.'/../dist/css/tool.css');
 
 	    Nova::provideToScript([ 'novaMediaLibrary' => $this->config() ]);
     }
@@ -28,14 +28,14 @@ class NovaMediaLibrary extends Tool
      */
     public function renderNavigation()
     {
-        return view('nova-media-library::navigation');
+        return view('nova-cms-media::navigation');
     }
 
 
 
     private function config()
     {
-    	$cfg = config('nova-media-library');
+    	$cfg = config('nova-cms-media');
 	    $types = data_get($cfg, 'types');
 
     	$config = [
@@ -67,7 +67,7 @@ class NovaMediaLibrary extends Tool
 
 	private function lang()
 	{
-		$file = resource_path('lang/vendor/nova-media-library/'.app()->getLocale().'.json');
+		$file = resource_path('lang/vendor/nova-cms-media/'.app()->getLocale().'.json');
 		if ( !is_readable($file)) return [];
 
 		$json = json_decode(file_get_contents($file));

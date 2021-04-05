@@ -5,7 +5,7 @@ Nova.booting((Vue, router, store) => {
 
   router.addRoutes([
     {
-      name: 'nova-media-library',
+      name: 'nova-cms-media',
       path: '/media-library',
       component: require('./tool/'),
     },
@@ -20,7 +20,7 @@ Nova.booting((Vue, router, store) => {
 
 if ('object' === typeof Nova.config.novaMediaLibrary) {
   if (Nova.config.novaMediaLibrary.store === 'folders') {
-    Nova.request().get('/nova-vendor/nova-media-library/folders').then(r => {
+    Nova.request().get('/nova-vendor/nova-cms-media/folders').then(r => {
       Object.assign(Nova.config.novaMediaLibrary, { folders: r.data })
     })
   }

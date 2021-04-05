@@ -1,6 +1,6 @@
 <?php
 
-namespace Kraenkvisuell\NovaMediaLibrary\Core;
+namespace Kraenkvisuell\NovaCmsMedia\Core;
 
 use Illuminate\Support\Facades\Route;
 
@@ -35,10 +35,10 @@ class Model extends \Illuminate\Database\Eloquent\Model {
 
 	function getUrlAttribute() {
 		if ( $this->lp )
-			return config('nova-media-library.url', '') . substr($this->path, 7);
+			return config('nova-cms-media.url', '') . substr($this->path, 7);
 
 		if ( !$this->private )
-			return config('nova-media-library.url', '') . $this->path;
+			return config('nova-cms-media.url', '') . $this->path;
 
 		if ( Route::has('nml-private-file') )
 			return route('nml-private-file', [ 'id' => $this->id, 'img_size' => request('img_size') ]);
@@ -56,7 +56,7 @@ class Model extends \Illuminate\Database\Eloquent\Model {
 		$title = trim(htmlspecialchars(request('title', '')));
 		$folder = trim(htmlspecialchars(request('folder', '')));
 
-		$step = config('nova-media-library.step');
+		$step = config('nova-cms-media.step');
 		if ( !is_int($step) or $step < 1 ) $step = 40;
 
 		$data = $this

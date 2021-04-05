@@ -1,5 +1,5 @@
 {
-    "name": "kraenkvisuell/nova-media-library",
+    "name": "kraenkvisuell/nova-cms-media",
     "description": "Tool and field that will let you managing files and add them to the posts",
     "keywords": ["laravel", "nova", "media", "gallery"],
     "license": "MIT",
@@ -9,13 +9,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Kraenkvisuell\\NovaMediaLibrary\\": "src/"
+            "Kraenkvisuell\\NovaCmsMedia\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Kraenkvisuell\\NovaMediaLibrary\\ToolServiceProvider"
+                "Kraenkvisuell\\NovaCmsMedia\\ToolServiceProvider"
             ]
         }
     },

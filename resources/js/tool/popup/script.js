@@ -30,7 +30,7 @@ export default {
       let data = { id: this.$parent.item.id, title: this.$parent.item.title, folder: this.folder };
       if ( cp ) data.private = Boolean(this.$parent.item.private);
 
-      Nova.request().post('/nova-vendor/nova-media-library/update', data).then(r => {
+      Nova.request().post('/nova-vendor/nova-cms-media/update', data).then(r => {
         this.$toasted.show(this.__('Successfully updated'), { type: 'success' });
         this.$parent.loading = false;
         this.$parent.item = null;

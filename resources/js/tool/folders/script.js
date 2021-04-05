@@ -32,7 +32,7 @@ export default {
       } else if ( 'remove' === type ) {
         if ( !confirm(this.__('Delete this folder?')) ) return;
 
-        Nova.request().post('/nova-vendor/nova-media-library/folder/del', { folder: parent.filter.folder }).then(r => {
+        Nova.request().post('/nova-vendor/nova-cms-media/folder/del', { folder: parent.filter.folder }).then(r => {
           if ( r.data.folders )
             this.$set(this.$parent.$parent.config, 'folders', r.data.folders);
           if ( r.data.message )
@@ -45,7 +45,7 @@ export default {
         let folder = prompt(this.__('New folder name'));
         if ( !folder ) return;
 
-        Nova.request().post('/nova-vendor/nova-media-library/folder/new', {
+        Nova.request().post('/nova-vendor/nova-cms-media/folder/new', {
           base: parent.filter.folder,
           folder: folder
         }).then(r => {

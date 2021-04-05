@@ -66,7 +66,7 @@ export default {
     },
     get() {
       this.loading = true;
-      Nova.request().post('/nova-vendor/nova-media-library/get', this.filter).then(r => {
+      Nova.request().post('/nova-vendor/nova-cms-media/get', this.filter).then(r => {
         this.loading = false;
         this.items = {
           array: this.items.array.concat(r.data.array),
@@ -80,7 +80,7 @@ export default {
     deleteFiles(ids) {
       if ( !ids.length || !confirm(this.__('Delete selected files?')) ) return;
       this.loading = true;
-      Nova.request().post('/nova-vendor/nova-media-library/delete', { ids: ids }).then(r => {
+      Nova.request().post('/nova-vendor/nova-cms-media/delete', { ids: ids }).then(r => {
         this.popup = null;
         this.$set(this.bulk, 'ids', {});
         this.clearData();

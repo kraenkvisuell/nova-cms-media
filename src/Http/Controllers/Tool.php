@@ -1,9 +1,9 @@
 <?php
 
-namespace Kraenkvisuell\NovaMediaLibrary\Http\Controllers;
+namespace Kraenkvisuell\NovaCmsMedia\Http\Controllers;
 
-use Kraenkvisuell\NovaMediaLibrary\API;
-use Kraenkvisuell\NovaMediaLibrary\Http\Requests\{
+use Kraenkvisuell\NovaCmsMedia\API;
+use Kraenkvisuell\NovaCmsMedia\Http\Requests\{
 	CropFr,
 	DeleteFr,
 	GetFr,
@@ -12,7 +12,7 @@ use Kraenkvisuell\NovaMediaLibrary\Http\Requests\{
 	FolderNewFr,
 	FolderDelFr,
 };
-use Kraenkvisuell\NovaMediaLibrary\Core\{
+use Kraenkvisuell\NovaCmsMedia\Core\{
 	Crop,
 	Helper,
 	Model,
@@ -23,7 +23,7 @@ class Tool {
 
 	function get(GetFr $fr)
 	{
-		$preview = config('nova-media-library.resize.preview');
+		$preview = config('nova-cms-media.resize.preview');
 
 		$data = (new Model)->search();
 		$data['array'] = collect($data['array'])->map(function ($item) use ($preview) {
@@ -118,7 +118,7 @@ class Tool {
 		$item->title = request('title');
 		$img_sizes = data_get($item->options, 'img_sizes', []);
 
-		if ( request()->has('private') and 's3' === config('nova-media-library.disk') ) {
+		if ( request()->has('private') and 's3' === config('nova-cms-media.disk') ) {
 			$item->private = (boolean)request('private');
 			$visibility = Helper::visibility($item->private);
 
@@ -128,7 +128,7 @@ class Tool {
 		}
 
 		$folder = request('folder');
-		if ( $folder and 'folders' === config('nova-media-library.store') and $folder !== $item->folder ) {
+		if ( $folder and 'folders' === config('nova-cms-media.store') and $folder !== $item->folder ) {
 			$private = Helper::isPrivate($folder);
 			$array = [ [$item->path, Helper::folder($folder . $item->name)] ];
 

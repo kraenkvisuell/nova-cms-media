@@ -18,7 +18,7 @@ class ComposerStaticInit12acc2af28eed82685493f1ecfd99aa7
         ),
         'K' => 
         array (
-            'Kraenkvisuell\\NovaMediaLibrary\\' => 31,
+            'Kraenkvisuell\\NovaCmsMedia\\' => 27,
         ),
         'I' => 
         array (
@@ -35,7 +35,7 @@ class ComposerStaticInit12acc2af28eed82685493f1ecfd99aa7
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Kraenkvisuell\\NovaMediaLibrary\\' => 
+        'Kraenkvisuell\\NovaCmsMedia\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

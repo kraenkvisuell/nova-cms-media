@@ -1,6 +1,6 @@
 <?php
 
-namespace Kraenkvisuell\NovaMediaLibrary\Http\Requests;
+namespace Kraenkvisuell\NovaCmsMedia\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;

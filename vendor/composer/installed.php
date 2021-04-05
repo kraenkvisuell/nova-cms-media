@@ -1,24 +1,24 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => '3489672e0f0e9f7825c1d21be628336bcfa84eab',
-    'name' => 'kraenkvisuell/nova-media-library',
+    'reference' => '44ec997adc6345b439370e91feb9d65367a6b2b0',
+    'name' => 'kraenkvisuell/nova-cms-media',
   ),
   'versions' => 
   array (
     'guzzlehttp/psr7' => 
     array (
-      'pretty_version' => '1.7.0',
-      'version' => '1.7.0.0',
+      'pretty_version' => '1.8.1',
+      'version' => '1.8.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '53330f47520498c0ae1f61f7e2c90f55690c06a3',
+      'reference' => '35ea11d335fd638b5882ff1725228b3d35496ab1',
     ),
     'intervention/image' => 
     array (
@@ -29,14 +29,14 @@
       ),
       'reference' => 'abbf18d5ab8367f96b3205ca3c89fb2fa598c69e',
     ),
-    'kraenkvisuell/nova-media-library' => 
+    'kraenkvisuell/nova-cms-media' => 
     array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => '3489672e0f0e9f7825c1d21be628336bcfa84eab',
+      'reference' => '44ec997adc6345b439370e91feb9d65367a6b2b0',
     ),
     'psr/http-message' => 
     array (

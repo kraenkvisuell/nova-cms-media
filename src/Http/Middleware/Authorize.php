@@ -1,9 +1,9 @@
 <?php
 
-namespace Kraenkvisuell\NovaMediaLibrary\Http\Middleware;
+namespace Kraenkvisuell\NovaCmsMedia\Http\Middleware;
 
 use Laravel\Nova\Nova;
-use Kraenkvisuell\NovaMediaLibrary\NovaMediaLibrary;
+use Kraenkvisuell\NovaCmsMedia\NovaCmsMedia;
 
 class Authorize
 {
@@ -29,6 +29,6 @@ class Authorize
      */
     public function matchesTool($tool)
     {
-        return $tool instanceof NovaMediaLibrary;
+        return $tool instanceof NovaCmsMedia;
     }
 }

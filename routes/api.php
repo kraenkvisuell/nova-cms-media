@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Kraenkvisuell\NovaMediaLibrary\Http\Controllers\Tool;
+use Kraenkvisuell\NovaCmsMedia\Http\Controllers\Tool;
 
 Route::post('/get',         Tool::class . '@get');
 Route::get( '/private',     Tool::class . '@private')->name('nml-private-file-admin');

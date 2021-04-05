@@ -1,10 +1,10 @@
 <?php
 
-namespace Kraenkvisuell\NovaMediaLibrary;
+namespace Kraenkvisuell\NovaCmsMedia;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Kraenkvisuell\NovaMediaLibrary\Core\{
+use Kraenkvisuell\NovaCmsMedia\Core\{
 	Crop,
 	Helper,
 	Model,

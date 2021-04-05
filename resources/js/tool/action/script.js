@@ -28,7 +28,7 @@ export default {
       data.append('file', file);
       data.append('folder', this.$parent.filter.folder);
 
-      Nova.request().post('/nova-vendor/nova-media-library/upload', data, config).then(r => {
+      Nova.request().post('/nova-vendor/nova-cms-media/upload', data, config).then(r => {
         this.upload.done++;
         this.$toasted.show(this.upload.done +' / '+ this.upload.total, { type: 'info', duration: 500 });
         this.uploadFile(i+1);

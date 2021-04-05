@@ -16,7 +16,7 @@ export default {
       this.info.over = over;
       this.info.id = this.$parent.item.id;
       this.$parent.loading = true;
-      Nova.request().post('/nova-vendor/nova-media-library/crop', this.info).then(() => {
+      Nova.request().post('/nova-vendor/nova-cms-media/crop', this.info).then(() => {
         this.$toasted.show(this.__('Image cropped successfully'), { type: 'success' });
         this.$parent.clearData();
         this.$parent.get();
