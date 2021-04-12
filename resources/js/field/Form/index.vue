@@ -1,5 +1,5 @@
 <template>
-  <default-field :field="field" :errors="errors" :fullWidthContent="true">
+  <default-field :field="field" :errors="errors" :fullWidthContent="true"  :show-help-text="showHelpText">
     <template slot="field">
       <div class="nml-field-form">
 
