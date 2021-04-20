@@ -12,13 +12,12 @@ class ToolServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova-cms-media');
         $this->loadJsonTranslationsFrom(resource_path('lang/vendor/nova-cms-media'));
-        $this->loadMigrationsFrom(__DIR__.'/../database/');
-
-	    $this->publishes([
-		    __DIR__.'/../config/' => config_path(),
-		    __DIR__.'/../database/' => base_path('/database/migrations'),
-		    __DIR__.'/../resources/lang' => resource_path('lang/vendor/nova-cms-media'),
-	    ], 'config-nova-cms-media');
+        
+        $this->publishes([
+            __DIR__.'/../config/' => config_path(),
+            __DIR__.'/../database/' => base_path('/database/migrations'),
+            __DIR__.'/../resources/lang' => resource_path('lang/vendor/nova-cms-media'),
+        ], 'config-nova-cms-media');
 
         $this->app->booted(function () {
             $this->routes();

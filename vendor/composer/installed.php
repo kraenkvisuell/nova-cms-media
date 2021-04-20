@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '44ec997adc6345b439370e91feb9d65367a6b2b0',
+    'reference' => '8a545b1086156ddf29d55bfc4b35a49de3443544',
     'name' => 'kraenkvisuell/nova-cms-media',
   ),
   'versions' => 
@@ -36,7 +36,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '44ec997adc6345b439370e91feb9d65367a6b2b0',
+      'reference' => '8a545b1086156ddf29d55bfc4b35a49de3443544',
     ),
     'psr/http-message' => 
     array (
