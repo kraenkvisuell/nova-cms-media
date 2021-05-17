@@ -15,10 +15,10 @@ class NovaCmsMedia extends Tool
      */
     public function boot()
     {
-	    Nova::script('nova-cms-media', __DIR__.'/../dist/js/tool.js');
-	    Nova::style('nova-cms-media', __DIR__.'/../dist/css/tool.css');
+        Nova::script('nova-cms-media', __DIR__.'/../dist/js/tool.js');
+        Nova::style('nova-cms-media', __DIR__.'/../dist/css/tool.css');
 
-	    Nova::provideToScript([ 'novaMediaLibrary' => $this->config() ]);
+        Nova::provideToScript([ 'novaMediaLibrary' => $this->config() ]);
     }
 
     /**
@@ -35,42 +35,48 @@ class NovaCmsMedia extends Tool
 
     private function config()
     {
-    	$cfg = config('nova-cms-media');
-	    $types = data_get($cfg, 'types');
+        $cfg = config('nova-cms-media');
+        $types = data_get($cfg, 'types');
 
-    	$config = [
-		    'can_private' => 's3' == data_get($cfg, 'disk'),
-		    'disk' => data_get($cfg, 'disk', 'public'),
-		    'front_crop' => data_get($cfg, 'resize.front_crop', false),
-		    'lang' => $this->lang(),
-		    'store' => data_get($cfg, 'store', 'together'),
-	    ];
+        $config = [
+            'can_private' => 's3' == data_get($cfg, 'disk'),
+            'disk' => data_get($cfg, 'disk', 'public'),
+            'front_crop' => data_get($cfg, 'resize.front_crop', false),
+            'lang' => $this->lang(),
+            'store' => data_get($cfg, 'store', 'together'),
+            'square_previews' => data_get($cfg, 'square_previews', true),
+        ];
 
-    	if ( 'folders' == $config['store'])
-    		$config['folders'] = [];//Helper::directories();
+        if ('folders' == $config['store']) {
+            $config['folders'] = [];
+        }//Helper::directories();
 
-	    if ( is_array($types) ) {
-		    $accept = [];
+        if (is_array($types)) {
+            $accept = [];
 
-		    foreach ($types as $key)
-			    $accept = array_merge($accept, $key);
+            foreach ($types as $key) {
+                $accept = array_merge($accept, $key);
+            }
 
-		    if ( in_array('*', $accept) )
-		    	$accept = [];
+            if (in_array('*', $accept)) {
+                $accept = [];
+            }
 
-		    $config['accept'] = preg_filter('/^/', '.', $accept);
-		    $config['types'] = array_keys($types);
-	    }
+            $config['accept'] = preg_filter('/^/', '.', $accept);
+            $config['types'] = array_keys($types);
+        }
 
-	    return $config;
+        return $config;
     }
 
-	private function lang()
-	{
-		$file = resource_path('lang/vendor/nova-cms-media/'.app()->getLocale().'.json');
-		if ( !is_readable($file)) return [];
+    private function lang()
+    {
+        $file = resource_path('lang/vendor/nova-cms-media/'.app()->getLocale().'.json');
+        if (!is_readable($file)) {
+            return [];
+        }
 
-		$json = json_decode(file_get_contents($file));
-		return is_object($json) ? $json : [];
-	}
+        $json = json_decode(file_get_contents($file));
+        return is_object($json) ? $json : [];
+    }
 }

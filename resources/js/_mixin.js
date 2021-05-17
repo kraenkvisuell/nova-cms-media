@@ -7,9 +7,10 @@ export default {
     },
     bg(item) {
       return 'image' === item.options.mime ? {
-        backgroundImage: `url(${item.preview || item.url})`,
-        backgroundSize: this.bgSize(item)
-      } : {};
+        backgroundImage: `url(${item.preview || item.url})`
+      } : {
+        backgroundSize: `36px 36px` 
+      };
     },
     mime(item) {
       return ['image', 'audio', 'video'].indexOf(item.options.mime) > -1

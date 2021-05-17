@@ -8,7 +8,7 @@
         <Folders :key="folder" v-if="!$parent.items.array.length && !getFolders.length" type="remove" />
       </template>
       <Folders type="create" />
-      <Folders v-for="item in getFolders" :key="item" type="folder" :label="item" />
+      <Folders v-for="item in getFolders" v-if="'https:' !== item" :key="item" type="folder" :label="item" />
     </template>
 
 
@@ -17,12 +17,19 @@
         v-for="item in $parent.items.array"
         :key="item.id"
         @click="clickItem(item)"
-        :class="['nml-item relative mb-2 cursor-pointer', { checked: $parent.bulk.enable && $parent.bulk.ids[item.id] }]"
+        :class="['text-80 nml-item relative mb-2 cursor-pointer', { checked: $parent.bulk.enable && $parent.bulk.ids[item.id] }]"
         :title="item.title || item.name"
       >
         <div
-          :class="'icon rounded-lg shadow-md nml-icon-'+mime(item)"
+          :class="[
+                'bg-no-repeat bg-center bg-white icon rounded-lg shadow-md nml-icon-'+mime(item), 
+                { 
+                    'bg-cover': mime(item) == 'image' && $parent.config.square_previews,
+                    'bg-contain': mime(item) == 'image' && !$parent.config.square_previews,
+                }
+           ]"
           :style="bg(item)"
+
         />
 
         <div class="title truncate" v-text="item.title || item.name" />

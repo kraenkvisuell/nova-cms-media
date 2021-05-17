@@ -15,6 +15,7 @@ return new class extends Migration {
         Schema::create('nova_media_library', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title')->index()->nullable();
+            $table->string('original_name')->nullable();
             $table->timestamp('created')->index()->useCurrent();
             $table->string('type')->index();
             $table->string('folder')->index();
