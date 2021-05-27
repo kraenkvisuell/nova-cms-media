@@ -163,4 +163,34 @@ class API
 
         return $item->original_name;
     }
+
+    public static function getMime($id)
+    {
+        if (!$id) {
+            return '';
+        }
+        
+        $item = Model::find($id);
+
+        if (!$item) {
+            return '';
+        }
+
+        return $item->options->mime ?? '';
+    }
+
+    public static function getExtension($id)
+    {
+        if (!$id) {
+            return 'jpg';
+        }
+        
+        $item = Model::find($id);
+
+        if (!$item) {
+            return 'jpg';
+        }
+
+        return substr($item->name, strrpos($item->name, '.') + 1);
+    }
 }
