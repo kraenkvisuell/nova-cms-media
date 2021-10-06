@@ -30,7 +30,7 @@ class Upload
         $this->extension = strtolower($file->getClientOriginalExtension());
         
         $this->title = $newName ?: data_get(pathinfo($file->getClientOriginalName()), 'filename', Str::random());
-        $this->originalName = $newName;
+        $this->originalName = $file->getClientOriginalName();
         $this->name = Str::slug($this->title) .'-'. time() . Str::random(5) .'.'. $this->extension;
         $this->options['mime'] = explode('/', $file->getMimeType())[0];
     }
