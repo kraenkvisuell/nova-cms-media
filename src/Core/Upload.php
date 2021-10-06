@@ -92,8 +92,8 @@ class Upload
             $this->resize['height'] = null;
         }
 
-
         if (
+            ($this->extension != 'gif' && $this->extension != 'svg') and
             'image' == $this->options['mime'] and
             ($this->resize['width'] or $this->resize['height']) and
             class_exists('\Intervention\Image\ImageManager')
