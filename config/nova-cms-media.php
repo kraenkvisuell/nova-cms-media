@@ -2,28 +2,28 @@
 
 return [
 
-    /**
+    /*
      * Default filesystem disk.
      *
      * @example `local` or `public` or `s3`
      * @var string
      */
 
-    'disk' => env('FILESYSTEM_DRIVER', 'public'),
+    'disk' => env('FILESYSTEM_DISK', 'public'),
 
-    /**
+    /*
      * Will use to return base url of media file.
      *
      * @var string
      */
 
-    'url' => 's3' == env('FILESYSTEM_DRIVER') ? env('AWS_MEDIA_URL', '') : env('APP_URL', '') . '/storage',
+    'url' => 's3' == env('FILESYSTEM_DISK') ? env('AWS_MEDIA_URL', '') : env('APP_URL', '').'/storage',
 
     's3' => [
         'upload_using_presigned_url' => false,
     ],
 
-    /**
+    /*
      * Store files `together` or in separate `folders`
      *
      * @var string
@@ -31,7 +31,7 @@ return [
 
     'store' => 'together',
 
-    /**
+    /*
      * Default file visibility (only for s3)
      * For disk `local` will be `true`, for `public` - `false`
      *
@@ -40,7 +40,7 @@ return [
 
     'private' => false,
 
-    /**
+    /*
      * Store all files in a separate folder of storage
      *
      * @var string
@@ -48,7 +48,7 @@ return [
 
     'folder'  => '',
 
-    /**
+    /*
      * Organize uploads into date based folders
      * Available date characters: `Y`, `m`, `d` and symbols: `-`, `_`, `/`
      * Does not work when parameter `store` != `together`
@@ -59,7 +59,7 @@ return [
 
     'by_date' => '',
 
-    /**
+    /*
      * This option allow you to filter your files by types and extensions
      * Format: Label => ['array', 'of', 'extensions']
      *
@@ -72,10 +72,10 @@ return [
         'Docs' => ['doc', 'xls', 'docx', 'xlsx', 'pdf'],
         'Audio' => ['mp3'],
         'Video' => ['mp4'],
-        #'Other' => ['*'],
+        //'Other' => ['*'],
     ],
 
-    /**
+    /*
      * Maximum upload size for each type
      * Add `Label` => `max_size` in bytes for needed types to enable limitation
      * If you want to disable the limitation - leave empty array
@@ -88,7 +88,7 @@ return [
         'Docs' => 5242880,
     ],
 
-    /**
+    /*
      * The number of files that will be returned with each step
      *
      * @var integer
@@ -96,7 +96,7 @@ return [
 
     'step' => 40,
 
-    /**
+    /*
      * Allow duplicate files in field (when use as array)
      *
      * @var bool
@@ -104,7 +104,7 @@ return [
 
     'duplicates' => true,
 
-    /**
+    /*
      * Allow you to resize original images by width\height. Using http://image.intervention.io library.
      * Width and height can be integer or null. If one of them is null - will resize image proportionally.
      *
@@ -114,31 +114,31 @@ return [
 
     'resize' => [
 
-        # `gd` or `imagick`
+        // `gd` or `imagick`
         'driver' => 'gd',
 
-        # 0 - 100
+        // 0 - 100
         'quality' => 80,
 
-        # Cropping image on the frontend
+        // Cropping image on the frontend
         'front_crop' => true,
 
-        # Maximum width and height in pixels for the original image [ width, height, upSize, upWH ]
-        # upSize {bool} - Crop image even if size will be larger. (If set to `false` - size image will be as original).
-        # upWH {bool} - Crop even if width and height image less than limits.
-        'original' => [ 1200, null, false, false ],
+        // Maximum width and height in pixels for the original image [ width, height, upSize, upWH ]
+        // upSize {bool} - Crop image even if size will be larger. (If set to `false` - size image will be as original).
+        // upWH {bool} - Crop even if width and height image less than limits.
+        'original' => [1200, null, false, false],
 
-        # Crop additional image variations [ width, height, upSize, upWH ]
+        // Crop additional image variations [ width, height, upSize, upWH ]
         'sizes' => [
-            'thumb' => [ 200, 200, true, false ],
-            'medium' => [ 800, null, true, false ],
+            'thumb' => [200, 200, true, false],
+            'medium' => [800, null, true, false],
         ],
 
-        # Set `size name` from `sizes` above for preview in admin area or leave `null`
+        // Set `size name` from `sizes` above for preview in admin area or leave `null`
         'preview' => 'thumb',
     ],
 
-    # Show preview as square
+    // Show preview as square
     'square_previews' => true,
 
 ];
