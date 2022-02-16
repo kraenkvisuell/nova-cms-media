@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     /**
@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('nova_media_library', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('title')->index()->nullable();
             $table->string('original_name')->nullable();
             $table->timestamp('created')->index()->useCurrent();

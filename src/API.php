@@ -11,30 +11,29 @@ use Kraenkvisuell\NovaCmsMedia\Core\Upload;
 
 class API
 {
-
     /**
-     * Upload file by path\url
+     * Upload file by path\url.
      *
      * @param string $path - path|url of file
      * @param string|null $folder - where store file if use `store` = 'folders'
      * @throws \Exception
      * @return true
      */
-    public static function upload($path, $folder = null, $newName = '')
+    public static function upload($path, $folder = '', $newName = '')
     {
         try {
             $base = basename(parse_url(($path), PHP_URL_PATH));
             $content = file_get_contents($path);
-            Storage::disk('local')->put('nml_temp/' . $base, $content);
+            Storage::disk('local')->put('nml_temp/'.$base, $content);
 
-            $file = new UploadedFile(storage_path('app/nml_temp/' . $base), $base);
-            if (!$file) {
+            $file = new UploadedFile(storage_path('app/nml_temp/'.$base), $base);
+            if (! $file) {
                 throw new \Exception(__('The file was not downloaded for unknown reasons'), 0);
             }
 
             $upload = new Upload($file, $newName);
 
-            if (!$upload->setType()) {
+            if (! $upload->setType()) {
                 throw new \Exception(__('Forbidden file format'), 1);
             }
 
@@ -46,7 +45,7 @@ class API
 
             $upload->setFile();
 
-            if (!$upload->checkSize()) {
+            if (! $upload->checkSize()) {
                 throw new \Exception(__('File size limit exceeded'), 2);
             }
 
@@ -54,17 +53,18 @@ class API
 
             if ($item) {
                 Crop::createSizes($item);
+
                 return $item;
             }
 
             throw new \Exception(__('The file was not downloaded for unknown reasons'), 0);
         } finally {
-            Storage::disk('local')->delete('nml_temp/' . $base);
+            Storage::disk('local')->delete('nml_temp/'.$base);
         }
     }
 
     /**
-     * Returns files by ids
+     * Returns files by ids.
      *
      * @param int|array $ids - id or array of ids
      * @param string|null $imgSize - label from config `media-library.resize.sizes`
@@ -75,14 +75,14 @@ class API
     {
         $items = Model::find(is_array($ids) ? $ids : [$ids]);
 
-        if (!$items) {
+        if (! $items) {
             return is_array($ids) ? [] : null;
         }
 
         $array = $items->map(function ($item) use ($imgSize, $object) {
             $item = $item->toArray();
 
-            if (!$item['url'] and !$object) {
+            if (! $item['url'] and ! $object) {
                 return false;
             }
 
@@ -90,16 +90,16 @@ class API
                 $item['url'] = self::getImageSize($item['url'], $imgSize);
             }
 
-            return $object ? (object)$item : $item['url'];
+            return $object ? (object) $item : $item['url'];
         })->reject(function ($value) {
-            return !$value;
+            return ! $value;
         });
 
         return is_array($ids) ? $array : ($array[0] ?? 1);
     }
 
     /**
-     * Generate image url for needed size
+     * Generate image url for needed size.
      *
      * @param string $url - image url
      * @param string $size - image size from `media-library.resize.sizes`
@@ -109,12 +109,13 @@ class API
     {
         $name = explode('.', $url);
         array_pop($name);
-        return implode('.', $name) .'-'. $size .'.'. pathinfo($url, PATHINFO_EXTENSION);
+
+        return implode('.', $name).'-'.$size.'.'.pathinfo($url, PATHINFO_EXTENSION);
     }
 
     /**
      * Return file content
-     * Must be used after checking user access in the controller
+     * Must be used after checking user access in the controller.
      *
      * @param string $path - data from DB ($item->path)
      * @param string|null $size - image size from `media-library.resize.sizes`
@@ -134,7 +135,7 @@ class API
             $start = 0;
             if (isset($_SERVER['HTTP_RANGE'])) {
                 $temp = explode('bytes=', $_SERVER['HTTP_RANGE'], 2);
-                $start = (float)(explode('-', $temp[1], 1))[0];
+                $start = (float) (explode('-', $temp[1], 1))[0];
                 $length = $bytes - $start;
             }
 
@@ -143,7 +144,7 @@ class API
                 ->header('Accept-Ranges', 'bytes')
                 ->header('Content-Length', $length)
                 ->header('Content-Range', "bytes $start-$end/$bytes")
-                ->header('Content-Disposition', 'filename="'. array_pop($name) .'"');
+                ->header('Content-Disposition', 'filename="'.array_pop($name).'"');
         } catch (\Exception $e) {
             return response()->noContent(404);
         }
@@ -151,13 +152,13 @@ class API
 
     public static function getOriginalName($id)
     {
-        if (!$id) {
+        if (! $id) {
             return '';
         }
-        
+
         $item = Model::find($id);
 
-        if (!$item) {
+        if (! $item) {
             return '';
         }
 
@@ -166,13 +167,13 @@ class API
 
     public static function getMime($id)
     {
-        if (!$id) {
+        if (! $id) {
             return '';
         }
-        
+
         $item = Model::find($id);
 
-        if (!$item) {
+        if (! $item) {
             return '';
         }
 
@@ -181,13 +182,13 @@ class API
 
     public static function getExtension($id)
     {
-        if (!$id) {
+        if (! $id) {
             return 'jpg';
         }
-        
+
         $item = Model::find($id);
 
-        if (!$item) {
+        if (! $item) {
             return 'jpg';
         }
 

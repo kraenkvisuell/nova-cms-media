@@ -28,23 +28,24 @@ class Upload
         $this->config = config('nova-cms-media');
         $this->file = $file;
         $this->extension = strtolower($file->getClientOriginalExtension());
-        
+
         $this->title = $newName ?: data_get(pathinfo($file->getClientOriginalName()), 'filename', Str::random());
         $this->originalName = $file->getClientOriginalName();
-        $this->name = Str::slug($this->title) .'-'. time() . Str::random(5) .'.'. $this->extension;
+        $this->name = Str::slug($this->title).'-'.time().Str::random(5).'.'.$this->extension;
         $this->options['mime'] = explode('/', $file->getMimeType())[0];
     }
 
     public function setType()
     {
         $types = config('nova-cms-media.types');
-        if (!is_array($types)) {
+        if (! is_array($types)) {
             return false;
         }
 
         foreach ($types as $label => $array) {
             if (in_array($this->extension, $array) or in_array('*', $array)) {
                 $this->type = $label;
+
                 return $label;
                 break;
             }
@@ -66,8 +67,8 @@ class Upload
     {
         if ('folders' != config('nova-cms-media.store')) {
             $this->folder = $this->date();
-        } elseif (is_string($folder)) {
-            $this->folder = Helper::replace('/'. $folder .'/');
+        } elseif (is_string($folder) && $folder != 'null') {
+            $this->folder = Helper::replace('/'.$folder.'/');
         } else {
             $this->folder = '/';
         }
@@ -81,14 +82,14 @@ class Upload
 
     public function setFile()
     {
-        $this->resize['width']  = data_get($this->config, 'resize.original.0');
+        $this->resize['width'] = data_get($this->config, 'resize.original.0');
         $this->resize['height'] = data_get($this->config, 'resize.original.1');
         $this->resize['upSize'] = data_get($this->config, 'resize.original.2');
-        $this->resize['upWH']   = data_get($this->config, 'resize.original.3');
-        if (!is_int($this->resize['width'])) {
+        $this->resize['upWH'] = data_get($this->config, 'resize.original.3');
+        if (! is_int($this->resize['width'])) {
             $this->resize['width'] = null;
         }
-        if (!is_int($this->resize['height'])) {
+        if (! is_int($this->resize['height'])) {
             $this->resize['height'] = null;
         }
 
@@ -112,13 +113,14 @@ class Upload
         }
 
         $this->options['size'] = Helper::size($this->bytes);
+
         return true;
     }
 
     public function save()
     {
         if (
-            Helper::upload($this->folder . $this->name, $this->file, $this->private)
+            Helper::upload($this->folder.$this->name, $this->file, $this->private)
         ) {
             return Model::create([
                 'title' => $this->title,
@@ -129,13 +131,14 @@ class Upload
                 'original_name' => $this->originalName,
                 'private' => $this->private,
                 'lp' => $this->lp,
-                'options' => $this->options
+                'options' => $this->options,
             ]);
         }
+
         return false;
     }
 
-    ##### Set File #####
+    //#### Set File #####
 
     private function byDefault()
     {
@@ -148,10 +151,10 @@ class Upload
         try {
             list($width, $height) = getimagesize($this->file);
             if (
-                !is_numeric($width) or !is_numeric($height) or
-                !$this->resize['upWH'] and
-                (!$this->resize['width'] or $this->resize['width'] > $width) and
-                (!$this->resize['height'] or $this->resize['height'] > $height)
+                ! is_numeric($width) or ! is_numeric($height) or
+                ! $this->resize['upWH'] and
+                (! $this->resize['width'] or $this->resize['width'] > $width) and
+                (! $this->resize['height'] or $this->resize['height'] > $height)
             ) {
                 return $this->noResize(false);
             }
@@ -160,11 +163,11 @@ class Upload
         }
 
         try {
-            $manager = new \Intervention\Image\ImageManager([ 'driver' => data_get($this->config, 'resize.driver') ]);
+            $manager = new \Intervention\Image\ImageManager(['driver' => data_get($this->config, 'resize.driver')]);
             $image = $manager->make($this->file);
 
             $data = $image->resize($this->resize['width'], $this->resize['height'], function ($constraint) {
-                if (!$this->resize['width'] or !$this->resize['height']) {
+                if (! $this->resize['width'] or ! $this->resize['height']) {
                     $constraint->aspectRatio();
                 }
                 if (true !== $this->resize['upSize']) {
@@ -183,7 +186,7 @@ class Upload
     {
         $this->noResize = $bool;
         $this->byDefault();
-        return null;
+
     }
 
     private function date()
@@ -193,7 +196,7 @@ class Upload
 
         if ($by_date) {
             $date = preg_replace('/[^Ymd_\-\/]/', '', $by_date);
-            $folder .= date($date) .'/';
+            $folder .= date($date).'/';
         }
 
         return Helper::replace($folder);
