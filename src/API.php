@@ -1,5 +1,4 @@
 <?php
-
 namespace Kraenkvisuell\NovaCmsMedia;
 
 use Illuminate\Http\UploadedFile;
@@ -24,16 +23,16 @@ class API
         try {
             $base = basename(parse_url(($path), PHP_URL_PATH));
             $content = file_get_contents($path);
-            Storage::disk('local')->put('nml_temp/'.$base, $content);
+            Storage::disk('local')->put('nml_temp/' . $base, $content);
 
-            $file = new UploadedFile(storage_path('app/nml_temp/'.$base), $base);
-            if (! $file) {
+            $file = new UploadedFile(storage_path('app/nml_temp/' . $base), $base);
+            if (!$file) {
                 throw new \Exception(__('The file was not downloaded for unknown reasons'), 0);
             }
 
             $upload = new Upload($file, $newName);
 
-            if (! $upload->setType()) {
+            if (!$upload->setType()) {
                 throw new \Exception(__('Forbidden file format'), 1);
             }
 
@@ -45,7 +44,7 @@ class API
 
             $upload->setFile();
 
-            if (! $upload->checkSize()) {
+            if (!$upload->checkSize()) {
                 throw new \Exception(__('File size limit exceeded'), 2);
             }
 
@@ -59,7 +58,7 @@ class API
 
             throw new \Exception(__('The file was not downloaded for unknown reasons'), 0);
         } finally {
-            Storage::disk('local')->delete('nml_temp/'.$base);
+            Storage::disk('local')->delete('nml_temp/' . $base);
         }
     }
 
@@ -75,14 +74,14 @@ class API
     {
         $items = Model::find(is_array($ids) ? $ids : [$ids]);
 
-        if (! $items) {
+        if (!$items) {
             return is_array($ids) ? [] : null;
         }
 
         $array = $items->map(function ($item) use ($imgSize, $object) {
             $item = $item->toArray();
 
-            if (! $item['url'] and ! $object) {
+            if (!$item['url'] and !$object) {
                 return false;
             }
 
@@ -92,7 +91,7 @@ class API
 
             return $object ? (object) $item : $item['url'];
         })->reject(function ($value) {
-            return ! $value;
+            return !$value;
         });
 
         return is_array($ids) ? $array : ($array[0] ?? 1);
@@ -110,7 +109,7 @@ class API
         $name = explode('.', $url);
         array_pop($name);
 
-        return implode('.', $name).'-'.$size.'.'.pathinfo($url, PATHINFO_EXTENSION);
+        return implode('.', $name) . '-' . $size . '.' . pathinfo($url, PATHINFO_EXTENSION);
     }
 
     /**
@@ -144,7 +143,7 @@ class API
                 ->header('Accept-Ranges', 'bytes')
                 ->header('Content-Length', $length)
                 ->header('Content-Range', "bytes $start-$end/$bytes")
-                ->header('Content-Disposition', 'filename="'.array_pop($name).'"');
+                ->header('Content-Disposition', 'filename="' . array_pop($name) . '"');
         } catch (\Exception $e) {
             return response()->noContent(404);
         }
@@ -152,13 +151,13 @@ class API
 
     public static function getOriginalName($id)
     {
-        if (! $id) {
+        if (!$id) {
             return '';
         }
 
         $item = Model::find($id);
 
-        if (! $item) {
+        if (!$item) {
             return '';
         }
 
@@ -167,28 +166,49 @@ class API
 
     public static function getMime($id)
     {
-        if (! $id) {
+        if (!$id) {
             return '';
         }
 
         $item = Model::find($id);
 
-        if (! $item) {
+        if (!$item) {
             return '';
         }
 
         return $item->options->mime ?? '';
     }
 
+    public static function getRatio($id)
+    {
+        if (!$id) {
+            return 1;
+        }
+
+        $item = Model::find($id);
+
+        if (!$item) {
+            return 1;
+        }
+
+        $wh = $item->options->wh;
+
+        if (is_array($wh) && count($wh) > 1) {
+            return round($wh[0] / $wh[1], 3);
+        }
+
+        return 1;
+    }
+
     public static function getExtension($id)
     {
-        if (! $id) {
+        if (!$id) {
             return 'jpg';
         }
 
         $item = Model::find($id);
 
-        if (! $item) {
+        if (!$item) {
             return 'jpg';
         }
 
