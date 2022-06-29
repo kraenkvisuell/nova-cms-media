@@ -191,7 +191,7 @@ class API
             return 1;
         }
 
-        $wh = $item->options->wh;
+        $wh = $item->options->wh ?? null;
 
         if (is_array($wh) && count($wh) > 1) {
             return round($wh[0] / $wh[1], 3);
