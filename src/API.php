@@ -197,7 +197,7 @@ class API
             return round($wh[0] / $wh[1], 3);
         }
 
-        return 1;
+        return 1.78;
     }
 
     public static function getExtension($id)
