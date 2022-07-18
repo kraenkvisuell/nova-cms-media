@@ -32,8 +32,8 @@ class ComposerStaticInit12acc2af28eed82685493f1ecfd99aa7
     public static $prefixDirsPsr4 = array (
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Kraenkvisuell\\NovaCmsMedia\\' => 
         array (

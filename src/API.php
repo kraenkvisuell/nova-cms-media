@@ -80,7 +80,7 @@ class API
 
         $array = $items->map(function ($item) use ($imgSize, $object) {
             $item = $item->toArray();
-
+            
             if (!$item['url'] and !$object) {
                 return false;
             }
